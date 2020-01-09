@@ -24,7 +24,7 @@ const renderOutput = () => {
 
 //make master function that calls getNameDayDate or getNameDayToday depending on input value
 const renderOutputDate = (date) => {
-    
+    console.log(date);
     getNameDayDate(10, 10, 'se')
         .then(data => {
             const namedays = data.data[0].namedays;
@@ -57,10 +57,11 @@ const renderOutputName = (name) => {
                     `;  
                 });
 
-            }else {
-                    document.querySelector('#outputUl').innerHTML += `
-                        <li class="list-group-item">${name} does not exist in the database or the country 😔</li>
-                    `;
+            } else {
+
+                document.querySelector('#outputUl').innerHTML += `
+                    <li class="list-group-item">${name} does not exist in the database or the country 😔</li>
+                `;
             }
         })
         .catch(err => {
@@ -78,7 +79,9 @@ document.querySelector('#app form').addEventListener('submit', e => {
         return;
     }
 
-    if(inputValue.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
+    console.log('inputValue', inputValue)
+    //regex pattern ("4 digits" - "2 digits" - "2 digits")
+    if(inputValue.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         console.log('Date triggered')
         renderOutputDate(inputValue);
     }else if (inputValue.match(/^[a-zA-Z]+$/)) {
@@ -103,4 +106,15 @@ document.querySelector('#app form').addEventListener('click', (e) => {
     }
 })
 
+Spain [es]	Finland [fi]
+France [fr]	Croatia [hr]	Hungary [hu]
+Italy [it]	Poland [pl]	Sweden [se]
+Slovakia [sk]	United States of America [us]
 
+const countries = {
+    Austria: 'at',
+    Czechia: 'cz',
+    Denmark: 'dk',
+    Germany: 'de',
+    
+}
