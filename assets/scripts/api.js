@@ -27,7 +27,6 @@ const getDateByName = async (name, country) => {
 
     const data = await response.json();
     //othernames that have namesday on the same day 
-    console.log(data);
     const day = data.results[0].day;
     const month = data.results[0].month;
     console.log(day, month);

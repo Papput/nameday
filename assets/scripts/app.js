@@ -50,8 +50,6 @@ const renderOutputDate = (month, day, country = '') => {
 const renderOutputName = (name, country) => {
     getDateByName(name, country)
         .then(data => {
-            console.log(data);
-            console.log('getDateByName', data.data.results);
             if(data.data.results.length){
 
                 //Render that day the person has the nameday
