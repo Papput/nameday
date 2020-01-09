@@ -20,6 +20,26 @@ const renderOutput = () => {
     .catch(err => {
         console.log('getNameDayToday error: ', err)
     });
+}
+
+//make master function that calls getNameDayDate or getNameDayToday depending on input value
+const renderOutputDate = (date) => {
+    
+    getNameDayDate('se',10,10)
+        .then(data => {
+            const namedays = data.data[0].namedays;
+           
+            let countrys = Object.keys(namedays);
+    
+            countrys.forEach(country => {
+                document.querySelector('#outputUl').innerHTML += `
+                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+                `
+            })
+        })
+    .catch(err => {
+        console.log('getNameDayToday error: ', err)
+    })
 
 }
 
@@ -34,7 +54,11 @@ document.querySelector('#app form').addEventListener('submit', e => {
         return;
     }
 
-    renderOutput();
+    if(inputValue.match(/^\d{4}\/\d{2}\/\d{2}$/)) {
+        renderOutputDate(inputValue);
+    }else if (inputValue.match(/^[a-zA-Z]+$/)) {
+        renderOutput(inputValue);
+    }
 });
 
 
