@@ -106,15 +106,20 @@ document.querySelector('#app form').addEventListener('click', (e) => {
     }
 })
 
-Spain [es]	Finland [fi]
-France [fr]	Croatia [hr]	Hungary [hu]
-Italy [it]	Poland [pl]	Sweden [se]
-Slovakia [sk]	United States of America [us]
 
 const countries = {
     Austria: 'at',
     Czechia: 'cz',
     Denmark: 'dk',
     Germany: 'de',
-    
+    Spain: 'es',
+    Finland: 'fi',
+    France: 'fr',
+    Croatia: 'hr',
+    Hungary: 'hu',
+    Italy: 'it',
+    Poland: 'pl',
+    Sweden: 'se',
+    Slovakia: 'sk',
+    USA: 'us'
 }
