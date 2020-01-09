@@ -109,6 +109,7 @@ document.querySelector('#app form').addEventListener('click', (e) => {
 
 
 const countries = {
+    Any: '',
     Austria: 'at',
     Czechia: 'cz',
     Denmark: 'dk',
