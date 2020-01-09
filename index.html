@@ -11,6 +11,20 @@
 <body>
 
     <main id="app" class="container">
+        <form>
+            <div class="form-row">
+                <input type="date" class="form-control col">
+                <button type="submit" class="btn btn-primary col-2">Submit</button>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="option" id="radioDate" value="date">
+                <label class="form-check-label" for="radioDate">Date</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="option" id="radioName" value="name">
+                <label class="form-check-label" for="radioDate">Name</label>
+            </div>
+        </form>
     </main>
     
     <script src="/assets/scripts/api.js"></script>
