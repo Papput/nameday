@@ -55,29 +55,34 @@ const renderOutputName = (name, country) => {
             if(data.data.results.length){
 
                 //Render that day the person has the nameday
-                data.data.results.forEach(date => {
-                    const day = date.day
-                    const month = date.month
-                        
-                    document.querySelector('#outputUl').innerHTML += `
-                        <li class="list-group-item">${name}'s name day is ${month}/${day}</li>
-                    `;  
-                });
+                const day = data.data.results[0].day
+                const month = data.data.results[0].month
+                const pEl = document.createElement('p');
+                    
+                pEl.innerHTML += `
+                    ${name}'s name day is: <spen>${month}/${day}</span>
+                `;
+                
+                document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
 
+                
+                if(data.names.data.length) {
+                    
+                    const h2El = document.createElement('h2');
+                    h2El.innerHTML = 'other names with the same nameday';
+                    document.querySelector('#app section').insertBefore(h2El, document.querySelector('#outputUl'));
+                    
+                    const sameNameDay = data.names.data[0].namedays;
+
+                    const sameNamedayKeys = Object.keys(sameNameDay);
+
+                    sameNamedayKeys.forEach(key => {
+                            document.querySelector('#outputUl').innerHTML += `
+                                <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
+                        `;
+                    });
+                }
                 //Render the other ppl that has the same nameday
-                const sameNameDay = data.names.data[0].namedays;
-
-                console.log(sameNameDay);
-
-                const sameNamedayKeys = Object.keys(sameNameDay);
-
-                console.log(sameNamedayKeys);
-                console.log(sameNameDay.at)
-                sameNamedayKeys.forEach(key => {
-                        document.querySelector('#outputUl').innerHTML += `
-                            <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
-                    `;
-                })
 
             } else {
 
