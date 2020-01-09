@@ -23,9 +23,8 @@ const renderOutput = () => {
 }
 
 //make master function that calls getNameDayDate or getNameDayToday depending on input value
-const renderOutputDate = (date) => {
-    console.log(date);
-    getNameDayDate(10, 10, 'se')
+const renderOutputDate = (month, day, country = '') => {
+    getNameDayDate(month, day, country)
         .then(data => {
             const namedays = data.data[0].namedays;
            
@@ -74,16 +73,18 @@ document.querySelector('#app form').addEventListener('submit', e => {
     //stop page from refreshing
     e.preventDefault();
     //contains a date or name
-    let inputValue = document.querySelector('#inputField').value;
+    let inputValue = document.querySelector('#inputField').value.trim();
     if(!inputValue.length){
         return;
     }
 
-    console.log('inputValue', inputValue)
     //regex pattern ("4 digits" - "2 digits" - "2 digits")
     if(inputValue.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
-        console.log('Date triggered')
-        renderOutputDate(inputValue);
+        console.log('Date triggered:', inputValue)
+        const date = new Date(inputValue)
+        const day = date.getDate(); 
+        const month = date.getMonth()+1; 
+        renderOutputDate(month, day, 'se');
     }else if (inputValue.match(/^[a-zA-Z]+$/)) {
         console.log('Name triggered')
         renderOutputName(inputValue);

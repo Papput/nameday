@@ -24,7 +24,16 @@ const getDateByName = async (name, country = 'se') => {
 
     return data;
 }
-const getNameDayDate = async (month, day, country = 'se') => {
+const getNameDayDate = async (month, day, country) => {
+    
+    if(!country.length){
+        const response = await fetch(`https://api.abalin.net/namedays?month=${month}&day=${day}`);
+        if(response.status !== 200) {
+            throw `response error, statusCode: ${response.status}`
+        }
+        const data = await response.json();
+        return data;
+    }
     const response = await fetch(`https://api.abalin.net/namedays?country=${country}&month=${month}&day=${day}`);
     if(response.status !== 200) {
         throw `response error, statusCode: ${response.status}`
