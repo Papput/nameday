@@ -18,7 +18,9 @@ const renderOutput = () => {
             })
         })
     .catch(err => {
-        console.log('getNameDayToday error: ', err)
+        document.querySelector('#outputUl').innerHTML += `
+            <li class="alert alert-warning">Oppsi! ${err}</li>
+        `;
     });
 };
 
@@ -37,7 +39,9 @@ const renderOutputDate = (month, day, country = '') => {
             })
         })
     .catch(err => {
-        console.log('getNameDayToday error: ', err)
+            document.querySelector('#outputUl').innerHTML += `
+            <li class="alert alert-warning">Oppsi! ${err}</li>
+        `;
     })
 
 };
@@ -59,12 +63,14 @@ const renderOutputName = (name, country) => {
             } else {
 
                 document.querySelector('#outputUl').innerHTML += `
-                    <li class="list-group-item">${name} does not exist in the database or the country 😔</li>
+                    <li class="alert alert-warning">${name} does not exist in the database or the country 😔</li>
                 `;
             }
         })
         .catch(err => {
-            console.log('getNameDayToday error: ', err)
+            document.querySelector('#outputUl').innerHTML += `
+                    <li class="alert alert-warning">Oppsi! ${err}</li>
+                `;
         })
 };
 
@@ -116,7 +122,7 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
     //clear screen before search
     clearScreen();
-    
+
     //regex pattern ("4 digits" - "2 digits" - "2 digits")
     if(inputValue.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         console.log('Date triggered:', inputValue)
