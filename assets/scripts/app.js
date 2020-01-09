@@ -15,6 +15,21 @@ getNameDayToday()
             console.log(namedays[country]);
         })
     })
-    .catch(err => {
-        console.log('getNameDayToday error: ', err)
-    })
+.catch(err => {
+    console.log('getNameDayToday error: ', err)
+});
+
+
+//submit event listner
+document.querySelector('#app form').addEventListener('submit', e => {
+    //stop page from refreshing
+    e.preventDefault();
+
+    //contains a date or name
+    let inputValue = document.querySelector('#inputDate').value;
+    if(!inputValue.length){
+        return;
+    }
+    console.log(inputValue.length);
+});
+
