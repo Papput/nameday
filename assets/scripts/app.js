@@ -1,24 +1,27 @@
 "use strict"
 
-getNameDayToday()
-    .then(nameDayToday => {
-        const dates = nameDayToday.data[0].dates;
-        const namedays = nameDayToday.data[0].namedays;
+const renderOutput = () => {
 
-        
-        console.log(dates);
-        console.log(namedays);
-        
-        const countrieCode = Object.keys(namedays);
-        countrieCode.forEach(country => {
-            console.log(country);
-            console.log(namedays[country]);
+    getNameDayToday()
+        .then(nameDayToday => {
+            const dates = nameDayToday.data[0].dates;
+            const namedays = nameDayToday.data[0].namedays;
+            console.log(dates);
+            console.log(namedays);
+
+            let countrys = Object.keys(namedays);
+
+            countrys.forEach(country => {
+                document.querySelector('#outputUl').innerHTML += `
+                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+                `
+            })
         })
-    })
-.catch(err => {
-    console.log('getNameDayToday error: ', err)
-});
+    .catch(err => {
+        console.log('getNameDayToday error: ', err)
+    });
 
+}
 
 //submit event listner
 document.querySelector('#app form').addEventListener('submit', e => {
@@ -30,7 +33,8 @@ document.querySelector('#app form').addEventListener('submit', e => {
     if(!inputValue.length){
         return;
     }
-    console.log(inputValue.length);
+
+    renderOutput();
 });
 
 
