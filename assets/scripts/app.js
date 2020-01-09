@@ -26,10 +26,20 @@ document.querySelector('#app form').addEventListener('submit', e => {
     e.preventDefault();
 
     //contains a date or name
-    let inputValue = document.querySelector('#inputDate').value;
+    let inputValue = document.querySelector('#inputField').value;
     if(!inputValue.length){
         return;
     }
     console.log(inputValue.length);
 });
+
+
+document.querySelector('#app form').addEventListener('click', e => {
+    if(e.target.id == 'radioDate') {
+        document.querySelector('#inputField').type = 'date';
+    }else if(e.target.id == 'radioName') {
+        document.querySelector('#inputField').type = 'text';
+    }
+})
+
 
