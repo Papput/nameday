@@ -46,14 +46,22 @@ const renderOutputDate = (date) => {
 const renderOutputName = (name) => {
     getDateByName(name)
         .then(data => {
-            console.log(data.results);
-            data.results.forEach(date => {
-                const day = date.day
-                const month = date.month
-                document.querySelector('#outputUl').innerHTML += `
-                    <li class="list-group-item">${name}'s name day is ${month}/${day}</li>
-                `
-            })
+            console.log('getDateByName', data.results);
+            if(data.results.length){
+                data.results.forEach(date => {
+                    const day = date.day
+                    const month = date.month
+                        
+                    document.querySelector('#outputUl').innerHTML += `
+                        <li class="list-group-item">${name}'s name day is ${month}/${day}</li>
+                    `;  
+                });
+
+            }else {
+                    document.querySelector('#outputUl').innerHTML += `
+                        <li class="list-group-item">${name} does not exist in the database or the country 😔</li>
+                    `;
+            }
         })
         .catch(err => {
             console.log('getNameDayToday error: ', err)
