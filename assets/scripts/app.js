@@ -16,5 +16,5 @@ getNameDayToday()
         })
     })
     .catch(err => {
-        console.log('getNameDayToday', err)
+        console.log('getNameDayToday error: ', err)
     })
