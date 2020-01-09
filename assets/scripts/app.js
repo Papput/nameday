@@ -49,6 +49,7 @@ const renderOutputDate = (month, day, country = '') => {
 const renderOutputName = (name, country) => {
     getDateByName(name, country)
         .then(data => {
+            console.log(data);
             console.log('getDateByName', data.results);
             if(data.results.length){
                 data.results.forEach(date => {
