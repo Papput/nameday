@@ -20,7 +20,7 @@ const renderOutput = () => {
     .catch(err => {
         console.log('getNameDayToday error: ', err)
     });
-}
+};
 
 //make master function that calls getNameDayDate or getNameDayToday depending on input value
 const renderOutputDate = (month, day, country = '') => {
@@ -40,10 +40,10 @@ const renderOutputDate = (month, day, country = '') => {
         console.log('getNameDayToday error: ', err)
     })
 
-}
+};
 
-const renderOutputName = (name) => {
-    getDateByName(name)
+const renderOutputName = (name, country) => {
+    getDateByName(name, country)
         .then(data => {
             console.log('getDateByName', data.results);
             if(data.results.length){
@@ -66,28 +66,67 @@ const renderOutputName = (name) => {
         .catch(err => {
             console.log('getNameDayToday error: ', err)
         })
-}
+};
 
+const updateCountrySelect = () => {
+    const countries = {
+        Any: '',
+        Austria: 'at',
+        Czechia: 'cz',
+        Denmark: 'dk',
+        Germany: 'de',
+        Spain: 'es',
+        Finland: 'fi',
+        France: 'fr',
+        Croatia: 'hr',
+        Hungary: 'hu',
+        Italy: 'it',
+        Poland: 'pl',
+        Slovakia: 'sk',
+        Sweden: 'se',
+        USA: 'us'
+    }
+
+    const CountryNames = Object.keys(countries);
+    CountryNames.sort();
+
+    CountryNames.forEach(countryName => {
+        document.querySelector('#countrySelect').innerHTML += `
+            <option value="${countries[countryName]}">${countryName}</option>
+        `;
+    })
+
+
+};
+
+const clearScreen = () => {
+    document.querySelector('#outputUl').innerHTML = '';
+}
 //submit event listner
 document.querySelector('#app form').addEventListener('submit', e => {
     //stop page from refreshing
     e.preventDefault();
     //contains a date or name
     let inputValue = document.querySelector('#inputField').value.trim();
+    let inputCountry = document.querySelector('#countrySelect').value;
+    console.log(inputCountry);
     if(!inputValue.length){
         return;
     }
 
+    //clear screen before search
+    clearScreen();
+    
     //regex pattern ("4 digits" - "2 digits" - "2 digits")
     if(inputValue.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
         console.log('Date triggered:', inputValue)
         const date = new Date(inputValue)
         const day = date.getDate(); 
         const month = date.getMonth()+1; 
-        renderOutputDate(month, day, 'se');
+        renderOutputDate(month, day, inputCountry);
     }else if (inputValue.match(/^[a-zA-Z]+$/)) {
         console.log('Name triggered')
-        renderOutputName(inputValue);
+        renderOutputName(inputValue, inputCountry);
     }
 });
 
@@ -105,23 +144,6 @@ document.querySelector('#app form').addEventListener('click', (e) => {
             document.querySelector('#inputField').focus();
         }
     }
-})
+});
 
-
-const countries = {
-    Any: '',
-    Austria: 'at',
-    Czechia: 'cz',
-    Denmark: 'dk',
-    Germany: 'de',
-    Spain: 'es',
-    Finland: 'fi',
-    France: 'fr',
-    Croatia: 'hr',
-    Hungary: 'hu',
-    Italy: 'it',
-    Poland: 'pl',
-    Sweden: 'se',
-    Slovakia: 'sk',
-    USA: 'us'
-}
+updateCountrySelect();
