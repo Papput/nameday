@@ -1,5 +1,6 @@
 "use strict"
 
+//remove????
 const renderOutput = () => {
 
     getNameDayToday()
@@ -35,7 +36,7 @@ const renderOutputDate = (month, day, country = '') => {
             countrys.forEach(country => {
                 document.querySelector('#outputUl').innerHTML += `
                     <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
-                `
+                `;
             })
         })
     .catch(err => {
@@ -50,9 +51,11 @@ const renderOutputName = (name, country) => {
     getDateByName(name, country)
         .then(data => {
             console.log(data);
-            console.log('getDateByName', data.results);
-            if(data.results.length){
-                data.results.forEach(date => {
+            console.log('getDateByName', data.data.results);
+            if(data.data.results.length){
+
+                //Render that day the person has the nameday
+                data.data.results.forEach(date => {
                     const day = date.day
                     const month = date.month
                         
@@ -60,6 +63,21 @@ const renderOutputName = (name, country) => {
                         <li class="list-group-item">${name}'s name day is ${month}/${day}</li>
                     `;  
                 });
+
+                //Render the other ppl that has the same nameday
+                const sameNameDay = data.names.data[0].namedays;
+
+                console.log(sameNameDay);
+
+                const sameNamedayKeys = Object.keys(sameNameDay);
+
+                console.log(sameNamedayKeys);
+                console.log(sameNameDay.at)
+                sameNamedayKeys.forEach(key => {
+                        document.querySelector('#outputUl').innerHTML += `
+                            <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
+                    `;
+                })
 
             } else {
 
