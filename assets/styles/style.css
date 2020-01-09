@@ -4,6 +4,7 @@
 
 li {
     font-size: 1em;
+    list-style: none;
 }
 
 li span {

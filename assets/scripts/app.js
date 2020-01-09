@@ -117,6 +117,10 @@ document.querySelector('#app form').addEventListener('submit', e => {
     let inputCountry = document.querySelector('#countrySelect').value;
     console.log(inputCountry);
     if(!inputValue.length){
+        clearScreen();
+        document.querySelector('#outputUl').innerHTML += `
+            <li class="alert alert-warning">Oppsi! inputfield is empty 😅</li>
+        `;
         return;
     }
 
