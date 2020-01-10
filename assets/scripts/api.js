@@ -3,8 +3,9 @@
  * api.abalin.net
  */
 
-const getNameDayToday = async () => {
-    const response = await fetch('https://api.abalin.net/today');
+ //"Y"esterday "T"oday "T"omorrow 
+const getNameDayByYTT = async (day, timezone, country) => {
+    const response = await fetch(`https://api.abalin.net/${day}?country=${country}&timezone=${timezone}`);
     if(response.status !== 200) {
         throw `response error, statusCode: ${response.status}`
     }

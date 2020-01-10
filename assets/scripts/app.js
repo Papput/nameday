@@ -1,12 +1,12 @@
 "use strict"
 
 //remove????
-const renderOutput = () => {
+const renderOutput = (day, timezone, country) => {
 
-    getNameDayToday()
-        .then(nameDayToday => {
-            const dates = nameDayToday.data[0].dates;
-            const namedays = nameDayToday.data[0].namedays;
+    getNameDayByYTT(day, timezone, country)
+        .then(nameDay => {
+            const dates = nameDay.data[0].dates;
+            const namedays = nameDay.data[0].namedays;
             console.log(dates);
             console.log(namedays);
 
@@ -179,3 +179,5 @@ document.querySelector('#app form').addEventListener('click', (e) => {
 });
 
 updateCountrySelect();
+
+const timeZones = [ "America/Denver", "America/Costa_Rica", "America/Los_Angeles", "America/St_Vincent", "America/Toronto", "Europe/Amsterdam", "Europe/Monaco", "Europe/Prague", "Europe/Isle_of_Man", "Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Asia/Yakutsk", "Asia/Hong_Kong", "Asia/Taipei", "Pacific/Midway", "Pacific/Honolulu", "Etc/GMT-6", "US/Samoa", "Zulu", "US/Hawaii", "Israel", "Etc/GMT-2" ]
