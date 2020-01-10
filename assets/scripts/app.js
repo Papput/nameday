@@ -58,7 +58,7 @@ const renderOutputName = (name, country) => {
                 const pEl = document.createElement('p');
                     
                 pEl.innerHTML += `
-                    ${name}'s name day is: <spen>${month}/${day}</span>
+                    ${name}'s name day is: <span>${month}/${day}</span>
                 `;
                 
                 document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
