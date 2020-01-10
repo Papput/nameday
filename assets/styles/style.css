@@ -1,5 +1,6 @@
-#app {
-    margin-top: 1rem;
+h1 {
+    margin-bottom: 1rem;
+    margin-top: 0.25rem;
 }
 
 li {
@@ -10,4 +11,12 @@ li {
 li span {
     font-weight: 600;
     font-size: 1.3em;
+}
+
+.form-row {
+    margin-bottom: 1rem;
+}
+
+#app {
+    margin-top: 1rem;
 }

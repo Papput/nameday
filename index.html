@@ -15,8 +15,19 @@
             <h1>Name days</h1>
             <form>
                 <div class="form-row">
-                    <input type="date" id="inputField" class="form-control col-6">
-                    <select class="custom-select col" id="countrySelect">
+                    <select class="custom-select col-3" id="dateSelect">
+                        <option value="any">Pick date</option>
+                        <option value="today">Today</option>
+                        <option value="tomorrow">Tomorrow</option>
+                        <option value="yesterday">Yesterday</option>
+                    </select>
+                    <select class="custom-select col-6" id="Timezone">
+                        <option value="any">Timezone</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="date" id="inputField" class="form-control col-7">
+                    <select class="custom-select col-3" id="countrySelect">
                     </select>
                     <button type="submit" class="btn btn-primary col-2">Submit</button>
                 </div>

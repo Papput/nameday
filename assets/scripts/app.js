@@ -170,7 +170,7 @@ document.querySelector('#app form').addEventListener('click', (e) => {
         document.querySelector('#inputField').type = 'date';
     } else if(document.querySelector('#radioName').checked) {
         document.querySelector('#inputField').type = 'text';
-        document.querySelector('#inputField').placeholder = "Enter a name to seach for namesday date";
+        document.querySelector('#inputField').placeholder = "Enter a name";
         if(e.target.id == 'radioName'){
             document.querySelector('#inputField').value = "";
             document.querySelector('#inputField').focus();
