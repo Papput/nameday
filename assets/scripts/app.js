@@ -35,6 +35,16 @@ const updateCountrySelect = () => {
 
 };
 
+const updateTimezoneSelect = () => {
+    const timeZones = [ "America/Denver", "America/Costa_Rica", "America/Los_Angeles", "America/St_Vincent", "America/Toronto", "Europe/Amsterdam", "Europe/Monaco", "Europe/Prague", "Europe/Isle_of_Man", "Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Asia/Yakutsk", "Asia/Hong_Kong", "Asia/Taipei", "Pacific/Midway", "Pacific/Honolulu", "Etc/GMT-6", "US/Samoa", "Zulu", "US/Hawaii", "Israel", "Etc/GMT-2" ];
+
+    timeZones.forEach(timezone => {
+        document.querySelector('#Timezone').innerHTML += `
+            <option value="${timezone}">${timezone}</option>
+        `
+    })
+}
+
 const clearScreen = () => {
     document.querySelector('#outputUl').innerHTML = '';
 }
@@ -89,8 +99,9 @@ const renderLayout = (layout) => {
                     const timezoneEl = document.createElement('select');
                     timezoneEl.classList.value = "custom-select col-6";
                     timezoneEl.id = "Timezone";
-                    timezoneEl.innerHTML = `<option value="any">Timezone</option>`;
+                    timezoneEl.innerHTML = `<option value="any">UTC +1h</option>`;
                     document.querySelector('#selectRow').append(timezoneEl);
+                    updateTimezoneSelect();
 
                     //<select class="" id="Timezone">
                     //<option value="any">Timezone</option>
@@ -100,7 +111,8 @@ const renderLayout = (layout) => {
             break;
     }
 }
-//remove????
+
+
 const renderOutput = (day, timezone, country) => {
 
     getNameDayByYTT(day, timezone, country)
@@ -202,10 +214,18 @@ document.querySelector('#app form').addEventListener('submit', e => {
     //stop page from refreshing
     e.preventDefault();
     //contains a date or name
-    let inputValue = document.querySelector('#inputField').value.trim();
-    let inputCountry = document.querySelector('#countrySelect').value;
-    console.log(inputCountry);
-    if(!inputValue.length){
+    const inputValue = document.querySelector('#inputField').value.trim();
+    const inputCountry = document.querySelector('#countrySelect').value;
+    const inputSelectDay = document.querySelector('#app #dateSelect').value;
+    
+    //if timeZOne is avalible set value
+    let inputTimeZone;
+    if(document.querySelector('#Timezone')){
+        inputTimeZone = document.querySelector('#Timezone').value;
+    }
+
+    //if input is empty and not searching by today etc.. render error message for empty input
+    if(!inputValue.length && !document.querySelector('#Timezone')){
         clearScreen();
         document.querySelector('#outputUl').innerHTML += `
             <li class="alert alert-warning">Oppsi! inputfield is empty 😅</li>
@@ -226,6 +246,12 @@ document.querySelector('#app form').addEventListener('submit', e => {
     } else if (inputValue.match(/^[a-zA-Z]+$/)) {
         console.log('Name triggered')
         renderOutputName(inputValue, inputCountry);
+    } else if (inputSelectDay == 'today' ||
+        inputSelectDay == 'tomorrow' ||
+        inputSelectDay == 'yesterday') {
+            console.log('timezone:', inputTimeZone);
+            renderOutput(inputSelectDay, inputTimeZone, inputCountry)
+
     } else {
         document.querySelector('#outputUl').innerHTML += `
             <li class="alert alert-warning">${inputValue} is an Invalid input 😅</li>
@@ -257,5 +283,3 @@ document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) =
 //Set Pagestart
 dateSelectStartValue();
 updateCountrySelect();
-
-const timeZones = [ "America/Denver", "America/Costa_Rica", "America/Los_Angeles", "America/St_Vincent", "America/Toronto", "Europe/Amsterdam", "Europe/Monaco", "Europe/Prague", "Europe/Isle_of_Man", "Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Asia/Yakutsk", "Asia/Hong_Kong", "Asia/Taipei", "Pacific/Midway", "Pacific/Honolulu", "Etc/GMT-6", "US/Samoa", "Zulu", "US/Hawaii", "Israel", "Etc/GMT-2" ]

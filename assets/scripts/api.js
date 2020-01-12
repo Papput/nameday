@@ -5,7 +5,8 @@
 
  //"Y"esterday "T"oday "T"omorrow 
 const getNameDayByYTT = async (day, timezone, country) => {
-    const response = await fetch(`https://api.abalin.net/${day}?country=${country}&timezone=${timezone}`);
+    console.log(day, timezone, country);
+    const response = await fetch(`https://api.abalin.net/${day}?timezone=${timezone}&country=${country}`);
     if(response.status !== 200) {
         throw `response error, statusCode: ${response.status}`
     }
@@ -28,7 +29,7 @@ const getDateByName = async (name, country) => {
 
     const data = await response.json();
     //othernames that have namesday on the same day 
-    
+
     //buggs when name doesn't exist in the country
     if(!data.results.length){
         throw `${name} doesnt seem to exist in that country`
