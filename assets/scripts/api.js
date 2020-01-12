@@ -28,7 +28,7 @@ const getDateByName = async (name, country) => {
 
     const data = await response.json();
     //othernames that have namesday on the same day 
-
+    
     //buggs when name doesn't exist in the country
     if(!data.results.length){
         throw `${name} doesnt seem to exist in that country`

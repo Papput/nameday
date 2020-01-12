@@ -163,7 +163,7 @@ document.querySelector('#app form').addEventListener('submit', e => {
 });
 
 
-//set input type after radiobox click
+//set input type after radiobox click -> set input after selection
 document.querySelector('#app form').addEventListener('click', (e) => {
     
     if(document.querySelector('#radioDate').checked) {
