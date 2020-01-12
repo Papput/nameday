@@ -1,5 +1,104 @@
 "use strict"
 
+/**
+ * Page helper functions
+ * 
+ */
+const updateCountrySelect = () => {
+    const countries = {
+        Any: '',
+        Austria: 'at',
+        Czechia: 'cz',
+        Denmark: 'dk',
+        Germany: 'de',
+        Spain: 'es',
+        Finland: 'fi',
+        France: 'fr',
+        Croatia: 'hr',
+        Hungary: 'hu',
+        Italy: 'it',
+        Poland: 'pl',
+        Slovakia: 'sk',
+        Sweden: 'se',
+        USA: 'us'
+    }
+
+    const CountryNames = Object.keys(countries);
+    CountryNames.sort();
+
+    CountryNames.forEach(countryName => {
+        document.querySelector('#countrySelect').innerHTML += `
+            <option value="${countries[countryName]}">${countryName}</option>
+        `;
+    })
+
+
+};
+
+const clearScreen = () => {
+    document.querySelector('#outputUl').innerHTML = '';
+}
+
+const dateSelectStartValue = () => {
+    renderLayout(document.querySelector('#app #dateSelect').value)
+}
+
+
+/**
+ * Page Render functions
+ * 
+ */
+
+ // render layout depending on dateSelect value 
+const renderLayout = (layout) => {
+    const timezoneQ = document.querySelector('#Timezone');
+    switch(layout) {
+        case 'date':
+            console.log(document.querySelector('#app #dateSelect').value);
+            document.querySelector('#inputField').type = 'date';
+            document.querySelector('#inputField').readOnly = false;
+            //remove Timezone if rendered
+            if(timezoneQ){
+                document.querySelector('#Timezone').remove();
+            }
+            break;
+            
+            case 'name':
+                console.log(document.querySelector('#app #dateSelect').value);
+                document.querySelector('#inputField').type = 'text';
+                document.querySelector('#inputField').value = "";
+                document.querySelector('#inputField').placeholder = "Enter a name";
+                document.querySelector('#inputField').readOnly = false;
+                document.querySelector('#inputField').focus();
+                
+                //remove Timezone if rendered
+                if(timezoneQ){
+                    document.querySelector('#Timezone').remove();
+                }
+                break;
+                
+            default:
+                console.log(document.querySelector('#app #dateSelect').value);
+                document.querySelector('#inputField').placeholder = `${layout.toUpperCase()}`;
+                document.querySelector('#inputField').type = 'text';
+                document.querySelector('#inputField').readOnly = true;
+
+                //render Timezone if not rendered
+                if(!timezoneQ) {
+                    const timezoneEl = document.createElement('select');
+                    timezoneEl.classList.value = "custom-select col-6";
+                    timezoneEl.id = "Timezone";
+                    timezoneEl.innerHTML = `<option value="any">Timezone</option>`;
+                    document.querySelector('#selectRow').append(timezoneEl);
+
+                    //<select class="" id="Timezone">
+                    //<option value="any">Timezone</option>
+                    //</select>
+                }
+
+            break;
+    }
+}
 //remove????
 const renderOutput = (day, timezone, country) => {
 
@@ -96,40 +195,7 @@ const renderOutputName = (name, country) => {
         })
 };
 
-const updateCountrySelect = () => {
-    const countries = {
-        Any: '',
-        Austria: 'at',
-        Czechia: 'cz',
-        Denmark: 'dk',
-        Germany: 'de',
-        Spain: 'es',
-        Finland: 'fi',
-        France: 'fr',
-        Croatia: 'hr',
-        Hungary: 'hu',
-        Italy: 'it',
-        Poland: 'pl',
-        Slovakia: 'sk',
-        Sweden: 'se',
-        USA: 'us'
-    }
 
-    const CountryNames = Object.keys(countries);
-    CountryNames.sort();
-
-    CountryNames.forEach(countryName => {
-        document.querySelector('#countrySelect').innerHTML += `
-            <option value="${countries[countryName]}">${countryName}</option>
-        `;
-    })
-
-
-};
-
-const clearScreen = () => {
-    document.querySelector('#outputUl').innerHTML = '';
-}
 //submit event listner
 document.querySelector('#app form').addEventListener('submit', e => {
     //stop page from refreshing
@@ -164,20 +230,27 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
 
 //set input type after radiobox click -> set input after selection
-document.querySelector('#app form').addEventListener('click', (e) => {
+// document.querySelector('#app form').addEventListener('click', (e) => {
     
-    if(document.querySelector('#radioDate').checked) {
-        document.querySelector('#inputField').type = 'date';
-    } else if(document.querySelector('#radioName').checked) {
-        document.querySelector('#inputField').type = 'text';
-        document.querySelector('#inputField').placeholder = "Enter a name";
-        if(e.target.id == 'radioName'){
-            document.querySelector('#inputField').value = "";
-            document.querySelector('#inputField').focus();
-        }
-    }
+//     if(document.querySelector('#radioDate').checked) {
+//         document.querySelector('#inputField').type = 'date';
+//     } else if(document.querySelector('#radioName').checked) {
+//         document.querySelector('#inputField').type = 'text';
+//         document.querySelector('#inputField').placeholder = "Enter a name";
+//         if(e.target.id == 'radioName'){
+//             document.querySelector('#inputField').value = "";
+//             document.querySelector('#inputField').focus();
+//         }
+//     }
+// });
+
+document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) => {
+    renderLayout(e.target.value);
 });
 
+
+//Set Pagestart
+dateSelectStartValue();
 updateCountrySelect();
 
 const timeZones = [ "America/Denver", "America/Costa_Rica", "America/Los_Angeles", "America/St_Vincent", "America/Toronto", "Europe/Amsterdam", "Europe/Monaco", "Europe/Prague", "Europe/Isle_of_Man", "Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Asia/Yakutsk", "Asia/Hong_Kong", "Asia/Taipei", "Pacific/Midway", "Pacific/Honolulu", "Etc/GMT-6", "US/Samoa", "Zulu", "US/Hawaii", "Israel", "Etc/GMT-2" ]

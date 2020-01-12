@@ -15,7 +15,7 @@
             <h1>Name days</h1>
             <!-- Form -->
             <form>
-                <div class="form-row">
+                <div class="form-row" id="selectRow">
                     <select class="custom-select col-3" id="dateSelect">
                         <option value="date">Pick date</option>
                         <option value="today">Today</option>
@@ -23,26 +23,12 @@
                         <option value="yesterday">Yesterday</option>
                         <option value="name">By Name</option>
                     </select>
-
-                    <!-- v ONLY SHOW WHEN Pick date is not selected v -->
-                    <select class="custom-select col-6" id="Timezone">
-                        <option value="any">Timezone</option>
-                    </select>
-                    <!-- ^ONLY SHOW WHEN Pick date is not selected^ -->
                 </div>
                 <div class="form-row">
                     <input type="date" id="inputField" class="form-control col-7">
                     <select class="custom-select col-3" id="countrySelect">
                     </select>
                     <button type="submit" class="btn btn-primary col-2">Submit</button>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="option" id="radioDate" value="date" checked>
-                    <label class="form-check-label" for="radioDate">Date</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="option" id="radioName" value="name">
-                    <label class="form-check-label" for="radioName">Name</label>
                 </div>
             </form>
             <!-- ./form -->
