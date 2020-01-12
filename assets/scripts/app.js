@@ -164,7 +164,13 @@ const renderOutputName = (name, country) => {
         .then(data => {
             if(data.data.results.length){
 
-                //Render that day the person has the nameday
+                //Render that day the person/persons has the namedays
+                console.log('data.data: ', data.data);
+                data.data.results.forEach(result => {
+                    let day = result.day;
+                    let month = result.month;
+                    let name = result.name;
+                })
                 const day = data.data.results[0].day
                 const month = data.data.results[0].month
                 const pEl = document.createElement('p');

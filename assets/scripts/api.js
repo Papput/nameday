@@ -35,6 +35,10 @@ const getDateByName = async (name, country) => {
         throw `${name} doesnt seem to exist in that country`
     }
     console.log('Get date by name:', data.results);
+    
+    // data.results.forEach(result => {
+    //     responseResults.push({day: result.day, month: result.month})
+    // })
     const day = data.results[0].day;
     const month = data.results[0].month;
     console.log(day, month);
