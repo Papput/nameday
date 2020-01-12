@@ -260,21 +260,6 @@ document.querySelector('#app form').addEventListener('submit', e => {
 });
 
 
-//set input type after radiobox click -> set input after selection
-// document.querySelector('#app form').addEventListener('click', (e) => {
-    
-//     if(document.querySelector('#radioDate').checked) {
-//         document.querySelector('#inputField').type = 'date';
-//     } else if(document.querySelector('#radioName').checked) {
-//         document.querySelector('#inputField').type = 'text';
-//         document.querySelector('#inputField').placeholder = "Enter a name";
-//         if(e.target.id == 'radioName'){
-//             document.querySelector('#inputField').value = "";
-//             document.querySelector('#inputField').focus();
-//         }
-//     }
-// });
-
 document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) => {
     renderLayout(e.target.value);
 });
