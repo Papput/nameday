@@ -168,9 +168,16 @@ const renderOutputName = (name, country) => {
                 const day = data.data.results[0].day
                 const month = data.data.results[0].month
                 const pEl = document.createElement('p');
+
+                const humanDate = moment().month(month).date(day).format('D MMMM');
+
+                // format name
+                const lowercaseName = name.toLowerCase()
+                const firstLetterUppercase = lowercaseName.charAt(0).toUpperCase() + lowercaseName.slice(1);
+                console.log(humanDate);
                     
                 pEl.innerHTML += `
-                    ${name}'s name day is: <span>${month}/${day}</span>
+                    ${firstLetterUppercase}'s name day is: <span>${humanDate}</span>
                 `;
                 
                 document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
@@ -179,7 +186,7 @@ const renderOutputName = (name, country) => {
                 if(data.names.data.length) {
                     
                     const h2El = document.createElement('h2');
-                    h2El.innerHTML = 'other names with the same nameday';
+                    h2El.innerHTML = 'other names with the same name day';
                     document.querySelector('#app section').insertBefore(h2El, document.querySelector('#outputUl'));
                     
                     const sameNameDay = data.names.data[0].namedays;
