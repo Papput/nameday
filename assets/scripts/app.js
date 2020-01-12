@@ -81,6 +81,7 @@ const renderLayout = (layout) => {
                 console.log(document.querySelector('#app #dateSelect').value);
                 document.querySelector('#inputField').placeholder = `${layout.toUpperCase()}`;
                 document.querySelector('#inputField').type = 'text';
+                document.querySelector('#inputField').value = "";
                 document.querySelector('#inputField').readOnly = true;
 
                 //render Timezone if not rendered
@@ -222,9 +223,13 @@ document.querySelector('#app form').addEventListener('submit', e => {
         const day = date.getDate(); 
         const month = date.getMonth()+1; 
         renderOutputDate(month, day, inputCountry);
-    }else if (inputValue.match(/^[a-zA-Z]+$/)) {
+    } else if (inputValue.match(/^[a-zA-Z]+$/)) {
         console.log('Name triggered')
         renderOutputName(inputValue, inputCountry);
+    } else {
+        document.querySelector('#outputUl').innerHTML += `
+            <li class="alert alert-warning">${inputValue} is an Invalid input 😅</li>
+        `;
     }
 });
 
