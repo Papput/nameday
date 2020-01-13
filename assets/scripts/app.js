@@ -46,7 +46,10 @@ const updateTimezoneSelect = () => {
 }
 
 const clearScreen = () => {
-    document.querySelector('#outputUl').innerHTML = '';
+    document.querySelector('#output').innerHTML = `
+        <ul id="outputUl" class="list-group">
+        </ul>
+    `;
 }
 
 const dateSelectStartValue = () => {
@@ -177,13 +180,13 @@ const renderOutputName = (name, country) => {
                 pEl.innerHTML += `
                     ${name}'s name day is: <span>${humanDate}</span>
                 `;
-                document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
+                document.querySelector('#output').insertBefore(pEl, document.querySelector('#outputUl'));
                     
 
                 //render names with same date
                 const h2El = document.createElement('h2');
                 h2El.innerHTML = 'other names with the same name day';
-                document.querySelector('#app section').insertBefore(h2El, document.querySelector('#outputUl'));
+                document.querySelector('#output').insertBefore(h2El, document.querySelector('#outputUl'));
                 console.log('data.names.data: ', data.names.data);
                 const sameNameDay = data.names.data[0].namedays;
                 const sameNamedayKeys = Object.keys(sameNameDay);
