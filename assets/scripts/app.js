@@ -1,6 +1,13 @@
 "use strict"
 
 /**
+ * 1. Page helper functions
+ * 2. Page Render functions
+ * 3. Event listeners
+ * 4. Page load
+ */
+
+/**
  * Page helper functions
  * 
  */
@@ -67,7 +74,6 @@ const renderLayout = (layout) => {
     const timezoneQ = document.querySelector('#Timezone');
     switch(layout) {
         case 'date':
-            console.log(document.querySelector('#app #dateSelect').value);
             document.querySelector('#inputField').type = 'date';
             document.querySelector('#inputField').readOnly = false;
             //remove Timezone if rendered
@@ -77,7 +83,6 @@ const renderLayout = (layout) => {
             break;
             
             case 'name':
-                console.log(document.querySelector('#app #dateSelect').value);
                 document.querySelector('#inputField').type = 'text';
                 document.querySelector('#inputField').value = "";
                 document.querySelector('#inputField').placeholder = "Enter a name";
@@ -91,7 +96,6 @@ const renderLayout = (layout) => {
                 break;
                 
             default:
-                console.log(document.querySelector('#app #dateSelect').value);
                 document.querySelector('#inputField').placeholder = `${layout.toUpperCase()}`;
                 document.querySelector('#inputField').type = 'text';
                 document.querySelector('#inputField').value = "";
@@ -121,11 +125,7 @@ const renderOutput = (day, timezone, country) => {
 
     getNameDayByYTT(day, timezone, country)
         .then(nameDay => {
-            const dates = nameDay.data[0].dates;
             const namedays = nameDay.data[0].namedays;
-            console.log(dates);
-            console.log(namedays);
-
             let countrys = Object.keys(namedays);
 
             countrys.forEach(country => {
@@ -159,7 +159,6 @@ const renderOutputDate = (month, day, country = '') => {
             <li class="alert alert-warning">Oppsi! ${err}</li>
         `;
     })
-
 };
 
 const renderOutputName = (name, country) => {
@@ -167,9 +166,6 @@ const renderOutputName = (name, country) => {
         .then(data => {
             if(data.data.results.length){
 
-				console.log(data.searchName)
-				//Render that day the person/persons has the namedays
-                console.log('data: ', data);
                 const result = data.data.results; 
                 let day = result[0].day;
                 let month = result[0].month;
@@ -191,12 +187,10 @@ const renderOutputName = (name, country) => {
 				
                 document.querySelector('#output').insertBefore(pEl, document.querySelector('#outputUl'));
                     
-
                 //render names with same date
                 const h2El = document.createElement('h2');
                 h2El.innerHTML = 'other names with the same name day';
                 document.querySelector('#output').insertBefore(h2El, document.querySelector('#outputUl'));
-                console.log('data.names.data: ', data.names.data);
                 const sameNameDay = data.names.data[0].namedays;
                 const sameNamedayKeys = Object.keys(sameNameDay);
                 sameNamedayKeys.forEach(key => {
@@ -256,19 +250,16 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
     //regex pattern ("4 digits" - "2 digits" - "2 digits")
     if(inputValue.match(/^\d{4}\-\d{2}\-\d{2}$/)) {
-        console.log('Date triggered:', inputValue)
         const date = new Date(inputValue)
         const day = date.getDate(); 
         const month = date.getMonth()+1; 
         renderOutputDate(month, day, inputCountry);
     } else if (inputValue.match(/^[a-zA-Z]+$/)) {
-        console.log('Name triggered')
         renderOutputName(inputValue, inputCountry);
     } else if (inputSelectDay == 'today' ||
         inputSelectDay == 'tomorrow' ||
         inputSelectDay == 'yesterday') {
-            console.log('timezone:', inputTimeZone);
-            renderOutput(inputSelectDay, inputTimeZone, inputCountry)
+            renderOutput(inputSelectDay, inputTimeZone, inputCountry);
 
     } else {
         document.querySelector('#outputUl').innerHTML += `
@@ -283,6 +274,9 @@ document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) =
     renderLayout(e.target.value);
 });
 
+/**
+ * Page load
+ */
 
 //Set Pagestart
 dateSelectStartValue();
