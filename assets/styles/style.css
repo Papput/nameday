@@ -27,3 +27,15 @@ li span {
 .form-row {
     margin-bottom: 1rem;
 }
+
+/* accordion styles */
+.accordion .card-header h2{
+    font-size: 1.2rem;
+    color: #212529;
+}
+.accordion .card-body h3 {
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+}

@@ -53,10 +53,7 @@ const updateTimezoneSelect = () => {
 }
 
 const clearScreen = () => {
-    document.querySelector('#output').innerHTML = `
-        <ul id="outputUl" class="list-group">
-        </ul>
-    `;
+    document.querySelector('#output').innerHTML = ``;
 }
 
 const dateSelectStartValue = () => {
@@ -109,19 +106,59 @@ const renderLayout = (layout) => {
                     timezoneEl.innerHTML = `<option value="any">UTC +1h</option>`;
                     document.querySelector('#selectRow').append(timezoneEl);
                     updateTimezoneSelect();
-
-                    //<select class="" id="Timezone">
-                    //<option value="any">Timezone</option>
-                    //</select>
                 }
 
             break;
     }
 }
 
+const renderAccordion = (cardList) => {
+	console.log('accordion cardList', cardList);
+	//render accordionWrapper
+	const accordionEl = document.createElement('div');
+	accordionEl.className = 'accordion';
+	accordionEl.id = 'accordionWrapper';
+	document.querySelector('#output').append(accordionEl);
+	
+	//Render accordion cards
+	cardList.forEach((cardObject, index) => {
+		const humanDate = moment().month(cardObject.month).date(cardObject.day).format('D MMMM');
+		const cardEl = document.createElement('div');
+		cardEl.className = 'card';
+		cardEl.innerHTML = `
+			<div class="card-header collapsed" id="heading${index}" type="button" data-toggle="collapse" data-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+				<h2>${cardObject.name}'s name day is ${humanDate}.</h2>
+			</div>
 
+			<div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionWrapper">
+				<div class="card-body">
+					<h3>Other ${humanDate} name day names</h3>
+					<ul id="outputUl${index}" class="list-group">
+						
+					</ul>
+				</div>
+			</div>
+		`
+	document.querySelector('#accordionWrapper').append(cardEl);
+
+	//render sameName dates
+	getNameDayDate(cardObject.month, cardObject.day, '')
+		.then(data => {
+			data.data.forEach(result => {
+				let countrys = Object.keys(result.namedays);
+				countrys.forEach(country => {
+					document.querySelector(`#outputUl${index}`).innerHTML += `
+                    	<li class="list-group-item"><span>${country}:</span> ${result.namedays[country]}</li>
+                	`;
+				})
+			
+				console.log('getNameDayDate data.data.forEach result', result);
+			})
+		})
+	});
+}
 //render api data
-const renderOutput = (day, timezone, country) => {
+const renderOutputDay = (day, timezone, country) => {
 
     getNameDayByYTT(day, timezone, country)
         .then(nameDay => {
@@ -129,14 +166,14 @@ const renderOutput = (day, timezone, country) => {
             let countrys = Object.keys(namedays);
 
             countrys.forEach(country => {
-                document.querySelector('#outputUl').innerHTML += `
-                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+                document.querySelector('#output').innerHTML += `
+                    <p class="list-group-item"><span>${country}:</span> ${namedays[country]}</p>
                 `
             })
         })
     .catch(err => {
-        document.querySelector('#outputUl').innerHTML += `
-            <li class="alert alert-warning">Oppsi! ${err}</li>
+        document.querySelector('#output').innerHTML += `
+            <p class="alert alert-warning">Oppsi! ${err}</p>
         `;
     });
 };
@@ -149,14 +186,14 @@ const renderOutputDate = (month, day, country = '') => {
             let countrys = Object.keys(namedays);
     
             countrys.forEach(country => {
-                document.querySelector('#outputUl').innerHTML += `
-                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+				document.querySelector('#output').innerHTML += `
+                    <p class="list-group-item"><span>${country}:</span> ${namedays[country]}</p>
                 `;
             })
         })
     .catch(err => {
-            document.querySelector('#outputUl').innerHTML += `
-            <li class="alert alert-warning">Oppsi! ${err}</li>
+            document.querySelector('#output').innerHTML += `
+            <p class="alert alert-warning">Oppsi! ${err}</p>
         `;
     })
 };
@@ -164,51 +201,18 @@ const renderOutputDate = (month, day, country = '') => {
 const renderOutputName = (name, country) => {
     getDateByName(name, country)
         .then(data => {
+			console.log('renderName Data:', data);
             if(data.data.results.length){
-
-                const result = data.data.results; 
-                let day = result[0].day;
-                let month = result[0].month;
-                let name = result[0].name;
-                
-                const pEl = document.createElement('p');
-                const humanDate = moment().month(month).date(day).format('D MMMM');
-				
-				//if serach name is same as api call return render name and date
-				if(data.searchName == name){
-					pEl.innerHTML += `
-						${name}'s name day is: <span>${humanDate}</span>
-					`;
-				} else {  // else render closest name
-					pEl.innerHTML += `
-						Could not find ${data.searchName}. Closest name found: ${name}'s name day is: <span>${humanDate}</span>
-					`;
-				}
-				
-                document.querySelector('#output').insertBefore(pEl, document.querySelector('#outputUl'));
-                    
-                //render names with same date
-                const h2El = document.createElement('h2');
-                h2El.innerHTML = 'other names with the same name day';
-                document.querySelector('#output').insertBefore(h2El, document.querySelector('#outputUl'));
-                const sameNameDay = data.names.data[0].namedays;
-                const sameNamedayKeys = Object.keys(sameNameDay);
-                sameNamedayKeys.forEach(key => {
-                        document.querySelector('#outputUl').innerHTML += `
-                            <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
-                    `;
-                });
-            
+				renderAccordion(data.data.results);
             } else {
-
-                document.querySelector('#outputUl').innerHTML += `
-                    <li class="alert alert-warning">${name} does not exist in the database or the country 😔</li>
+                document.querySelector('#output').innerHTML += `
+                    <p class="alert alert-warning">${name} does not exist in the database or the country 😔</p>
                 `;
             }
         })
         .catch(err => {
-            document.querySelector('#outputUl').innerHTML += `
-                    <li class="alert alert-warning">Oppsi! ${err}</li>
+            document.querySelector('#output').innerHTML += `
+                    <p class="alert alert-warning">Oppsi! ${err}</p>
                 `;
         })
 };
@@ -239,8 +243,8 @@ document.querySelector('#app form').addEventListener('submit', e => {
     //if input is empty and not searching by today etc.. render error message for empty input
     if(!inputValue.length && !document.querySelector('#Timezone')){
         clearScreen();
-        document.querySelector('#outputUl').innerHTML += `
-            <li class="alert alert-warning">Oppsi! inputfield is empty 😅</li>
+        document.querySelector('#output').innerHTML += `
+            <p class="alert alert-warning">Oppsi! inputfield is empty 😅</p>
         `;
         return;
     }
@@ -259,11 +263,11 @@ document.querySelector('#app form').addEventListener('submit', e => {
     } else if (inputSelectDay == 'today' ||
         inputSelectDay == 'tomorrow' ||
         inputSelectDay == 'yesterday') {
-            renderOutput(inputSelectDay, inputTimeZone, inputCountry);
+            renderOutputDay(inputSelectDay, inputTimeZone, inputCountry);
 
     } else {
-        document.querySelector('#outputUl').innerHTML += `
-            <li class="alert alert-warning">${inputValue} is an Invalid input 😅</li>
+        document.querySelector('#output').innerHTML += `
+            <p class="alert alert-warning">${inputValue} is an Invalid input 😅</p>
         `;
     }
 });

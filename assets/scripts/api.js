@@ -33,7 +33,7 @@ const getDateByName = async (name, country) => {
 
 const getNameDayDate = async (month, day, country) => {
     let response;
-    if(!country.length){
+    if(country == ''){
         response = await fetch(`https://api.abalin.net/namedays?month=${month}&day=${day}`);
     } else {
         response = await fetch(`https://api.abalin.net/namedays?country=${country}&month=${month}&day=${day}`);
