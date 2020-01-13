@@ -27,16 +27,8 @@ const getDateByName = async (name, country) => {
     }
 
     const data = await response.json();
-    //othernames that have namesday on the same day 
-
-    //buggs when name doesn't exist in the country
-    if(!data.results.length){
-        throw `${name} doesnt seem to exist in that country`
-    }
     
-    const othernames = await getNameDayDate(data.results[0].day, data.results[0].month, '');
-    
-    return {data: data, names: othernames, searchName: name};
+    return {data: data, searchName: name};
 }
 
 const getNameDayDate = async (month, day, country) => {
