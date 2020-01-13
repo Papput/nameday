@@ -165,9 +165,12 @@ const renderOutputDay = (day, timezone, country) => {
             const namedays = nameDay.data[0].namedays;
             let countrys = Object.keys(namedays);
 
+			document.querySelector('#output').innerHTML = `
+				<ul id="outputUl" class="list-group"></ul>
+			`
             countrys.forEach(country => {
-                document.querySelector('#output').innerHTML += `
-                    <p class="list-group-item"><span>${country}:</span> ${namedays[country]}</p>
+                document.querySelector('#outputUl').innerHTML += `
+                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
                 `
             })
         })
@@ -184,10 +187,13 @@ const renderOutputDate = (month, day, country = '') => {
             const namedays = data.data[0].namedays;
            
             let countrys = Object.keys(namedays);
-    
+			
+			document.querySelector('#output').innerHTML = `
+				<ul id="outputUl" class="list-group"></ul>
+			`
             countrys.forEach(country => {
-				document.querySelector('#output').innerHTML += `
-                    <p class="list-group-item"><span>${country}:</span> ${namedays[country]}</p>
+				document.querySelector('#outputUl').innerHTML += `
+                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
                 `;
             })
         })
