@@ -278,7 +278,7 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
 
 //dateSelect event listner
-document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) => {
+document.querySelector('#app #dateSelect').addEventListener('change', (e) => {
 	console.log('helloooo google?????')
     renderLayout(e.target.value);
 });
