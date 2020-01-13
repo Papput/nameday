@@ -69,6 +69,7 @@ const dateSelectStartValue = () => {
  // render layout depending on dateSelect value 
 const renderLayout = (layout) => {
     const timezoneQ = document.querySelector('#Timezone');
+	console.log(layout);
     switch(layout) {
         case 'date':
             document.querySelector('#inputField').type = 'date';
@@ -113,7 +114,6 @@ const renderLayout = (layout) => {
 }
 
 const renderAccordion = (cardList) => {
-	console.log('accordion cardList', cardList);
 	//render accordionWrapper
 	const accordionEl = document.createElement('div');
 	accordionEl.className = 'accordion';
@@ -152,7 +152,6 @@ const renderAccordion = (cardList) => {
                 	`;
 				})
 			
-				console.log('getNameDayDate data.data.forEach result', result);
 			})
 		})
 	});
@@ -207,7 +206,6 @@ const renderOutputDate = (month, day, country = '') => {
 const renderOutputName = (name, country) => {
     getDateByName(name, country)
         .then(data => {
-			console.log('renderName Data:', data);
             if(data.data.results.length){
 				renderAccordion(data.data.results);
             } else {
@@ -281,6 +279,7 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
 //dateSelect event listner
 document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) => {
+	console.log('helloooo google?????')
     renderLayout(e.target.value);
 });
 
