@@ -166,41 +166,33 @@ const renderOutputName = (name, country) => {
 
                 //Render that day the person/persons has the namedays
                 console.log('data: ', data);
-                data.data.results.forEach(result => {
-                    let day = result.day;
-                    let month = result.month;
-                    let name = result.name;
-                    const pEl = document.createElement('p');
-                    const humanDate = moment().month(month).date(day).format('D MMMM');
-                    // format name
-                    const lowercaseName = name.toLowerCase()
-                    const firstLetterUppercase = lowercaseName.charAt(0).toUpperCase() + lowercaseName.slice(1);
-                    console.log(humanDate);
-                    pEl.innerHTML += `
-                        ${firstLetterUppercase}'s name day is: <span>${humanDate}</span>
+                const result = data.data.results; 
+                let day = result[0].day;
+                let month = result[0].month;
+                let name = result[0].name;
+                
+                const pEl = document.createElement('p');
+                const humanDate = moment().month(month).date(day).format('D MMMM');
+                    
+                pEl.innerHTML += `
+                    ${name}'s name day is: <span>${humanDate}</span>
+                `;
+                document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
+                    
+
+                //render names with same date
+                const h2El = document.createElement('h2');
+                h2El.innerHTML = 'other names with the same name day';
+                document.querySelector('#app section').insertBefore(h2El, document.querySelector('#outputUl'));
+                console.log('data.names.data: ', data.names.data);
+                const sameNameDay = data.names.data[0].namedays;
+                const sameNamedayKeys = Object.keys(sameNameDay);
+                sameNamedayKeys.forEach(key => {
+                        document.querySelector('#outputUl').innerHTML += `
+                            <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
                     `;
-                    document.querySelector('#app section').insertBefore(pEl, document.querySelector('#outputUl'));
-                    
-
-                    //render names with same date
-                    const h2El = document.createElement('h2');
-                    h2El.innerHTML = 'other names with the same name day';
-                    document.querySelector('#app section').insertBefore(h2El, document.querySelector('#outputUl'));
-                    const sameNameDay = data.names[0].data[0].namedays;
-                    const sameNamedayKeys = Object.keys(sameNameDay);
-                    sameNamedayKeys.forEach(key => {
-                            document.querySelector('#outputUl').innerHTML += `
-                                <li class="list-group-item"><span>${key}:</span> ${sameNameDay[key]}</li>
-                        `;
-                    });
                 });
-
-
-                    
-                
-
-                
-
+            
             } else {
 
                 document.querySelector('#outputUl').innerHTML += `
