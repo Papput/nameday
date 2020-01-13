@@ -69,7 +69,6 @@ const dateSelectStartValue = () => {
  // render layout depending on dateSelect value 
 const renderLayout = (layout) => {
     const timezoneQ = document.querySelector('#Timezone');
-	console.log(layout);
     switch(layout) {
         case 'date':
             document.querySelector('#inputField').type = 'date';
@@ -279,7 +278,6 @@ document.querySelector('#app form').addEventListener('submit', e => {
 
 //dateSelect event listner
 document.querySelector('#app #dateSelect').addEventListener('change', (e) => {
-	console.log('helloooo google?????')
     renderLayout(e.target.value);
 });
 
