@@ -34,17 +34,12 @@ const getDateByName = async (name, country) => {
     if(!data.results.length){
         throw `${name} doesnt seem to exist in that country`
     }
-    console.log('Get date by name:', data.results);
     
-    // data.results.forEach(result => {
-    //     responseResults.push({day: result.day, month: result.month})
-    // })
-    const day = data.results[0].day;
-    const month = data.results[0].month;
-    console.log(day, month);
-    const othernames = await getNameDayDate(month, day,  '');
+    const othernames = await getNameDayDate(data.results[0].day, data.results[0].month, '');
+    
     return {data: data, names: othernames};
 }
+
 const getNameDayDate = async (month, day, country) => {
     let response;
     if(!country.length){
