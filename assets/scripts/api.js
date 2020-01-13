@@ -37,7 +37,7 @@ const getDateByName = async (name, country) => {
     
     const othernames = await getNameDayDate(data.results[0].day, data.results[0].month, '');
     
-    return {data: data, names: othernames};
+    return {data: data, names: othernames, searchName: name};
 }
 
 const getNameDayDate = async (month, day, country) => {

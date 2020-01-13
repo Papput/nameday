@@ -116,6 +116,7 @@ const renderLayout = (layout) => {
 }
 
 
+//render api data
 const renderOutput = (day, timezone, country) => {
 
     getNameDayByYTT(day, timezone, country)
@@ -140,7 +141,6 @@ const renderOutput = (day, timezone, country) => {
     });
 };
 
-//make master function that calls getNameDayDate or getNameDayToday depending on input value
 const renderOutputDate = (month, day, country = '') => {
     getNameDayDate(month, day, country)
         .then(data => {
@@ -167,7 +167,8 @@ const renderOutputName = (name, country) => {
         .then(data => {
             if(data.data.results.length){
 
-                //Render that day the person/persons has the namedays
+				console.log(data.searchName)
+				//Render that day the person/persons has the namedays
                 console.log('data: ', data);
                 const result = data.data.results; 
                 let day = result[0].day;
@@ -176,10 +177,18 @@ const renderOutputName = (name, country) => {
                 
                 const pEl = document.createElement('p');
                 const humanDate = moment().month(month).date(day).format('D MMMM');
-                    
-                pEl.innerHTML += `
-                    ${name}'s name day is: <span>${humanDate}</span>
-                `;
+				
+				//if serach name is same as api call return render name and date
+				if(data.searchName == name){
+					pEl.innerHTML += `
+						${name}'s name day is: <span>${humanDate}</span>
+					`;
+				} else {  // else render closest name
+					pEl.innerHTML += `
+						Could not find ${data.searchName}. Closest name found: ${name}'s name day is: <span>${humanDate}</span>
+					`;
+				}
+				
                 document.querySelector('#output').insertBefore(pEl, document.querySelector('#outputUl'));
                     
 
@@ -209,6 +218,13 @@ const renderOutputName = (name, country) => {
                 `;
         })
 };
+
+
+
+/**
+ *  Event listeners
+ * 
+ */
 
 
 //submit event listner
@@ -262,6 +278,7 @@ document.querySelector('#app form').addEventListener('submit', e => {
 });
 
 
+//dateSelect event listner
 document.querySelector('#app #dateSelect').addEventListener('ValueChange', (e) => {
     renderLayout(e.target.value);
 });
