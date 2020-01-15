@@ -160,17 +160,26 @@ const renderOutputDay = (day, timezone, country) => {
 
     getNameDayByYTT(day, timezone, country)
         .then(nameDay => {
-            const namedays = nameDay.data[0].namedays;
-            let countrys = Object.keys(namedays);
+            nameDay.data.forEach((data, index) => {
+                //get country keys
+                const namedays = data.namedays;
+                let countrys = Object.keys(namedays);
 
-			document.querySelector('#output').innerHTML = `
-				<ul id="outputUl" class="list-group"></ul>
-			`
-            countrys.forEach(country => {
-                document.querySelector('#outputUl').innerHTML += `
-                    <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+                //get date
+                const humanDate = moment().month(data.dates.month).date(data.dates.day).format('D MMMM');
+                
+                //create ul for data
+                document.querySelector('#output').innerHTML += `
+                    <h2>${humanDate}</h2>
+                    <ul id="outputUl${index}" class="list-group"></ul>
                 `
-            })
+                //insert data in ul
+                countrys.forEach(country => {
+                    document.querySelector(`#outputUl${index}`).innerHTML += `
+                        <li class="list-group-item"><span>${country}:</span> ${namedays[country]}</li>
+                    `
+                });
+            });
         })
     .catch(err => {
         document.querySelector('#output').innerHTML += `
