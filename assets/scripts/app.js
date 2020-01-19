@@ -143,6 +143,11 @@ const renderAccordion = (cardList) => {
     const allCountries = ['at','hr','cz','dk','fi','fr','de','hu','it','pl','sk','es','se','us']
     
     //get nameday date for all countries
+    /**
+     * Blir väldigt många api calls nu, skulle kunna köra getNameDayDate(cardObject.month, cardObject.day, country) och
+     * skicka med det valda namnet som parameter i renderAccordion(cardList, country)
+     * 
+     */ 
     allCountries.forEach(country => {
         //render sameName dates
         getNameDayDate(cardObject.month, cardObject.day, country)
