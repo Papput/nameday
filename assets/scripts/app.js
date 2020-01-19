@@ -138,30 +138,30 @@ const renderAccordion = (cardList) => {
 				</div>
 			</div>
 		`
-	document.querySelector('#accordionWrapper').append(cardEl);
+	    document.querySelector('#accordionWrapper').append(cardEl);
 
-    const allCountries = ['at','hr','cz','dk','fi','fr','de','hu','it','pl','sk','es','se','us']
+        const allCountries = ['at','hr','cz','dk','fi','fr','de','hu','it','pl','sk','es','se','us']
     
-    //get nameday date for all countries
-    /**
-     * Blir väldigt många api calls nu, skulle kunna köra getNameDayDate(cardObject.month, cardObject.day, country) och
-     * skicka med det valda namnet som parameter i renderAccordion(cardList, country)
-     * 
-     */ 
-    allCountries.forEach(country => {
-        //render sameName dates
-        getNameDayDate(cardObject.month, cardObject.day, country)
-            .then(data => {
-                data.data.forEach(result => {
-                    let countrys = Object.keys(result.namedays);
-                    countrys.forEach(country => {
-                        document.querySelector(`#outputUl${index}`).innerHTML += `
-                            <li class="list-group-item"><span>${country}:</span> ${result.namedays[country]}</li>
-                        `;
+        //get nameday date for all countries
+        /**
+         * Blir väldigt många api calls nu, skulle kunna köra getNameDayDate(cardObject.month, cardObject.day, country) och
+         * skicka med det valda namnet som parameter i renderAccordion(cardList, country)
+         * 
+         */ 
+        allCountries.forEach(country => {
+            //render sameName dates
+            getNameDayDate(cardObject.month, cardObject.day, country)
+                .then(data => {
+                    data.data.forEach(result => {
+                        let countrys = Object.keys(result.namedays);
+                        countrys.forEach(country => {
+                            document.querySelector(`#outputUl${index}`).innerHTML += `
+                                <li class="list-group-item"><span>${country}:</span> ${result.namedays[country]}</li>
+                            `;
+                        })
+                    
                     })
-                
-                })
-            })
+                });
         });
 
     });
