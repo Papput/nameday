@@ -60,7 +60,6 @@ const dateSelectStartValue = () => {
     renderLayout(document.querySelector('#app #dateSelect').value)
 }
 
-
 /**
  * Page Render functions
  * 
@@ -114,7 +113,6 @@ const renderLayout = (layout) => {
 
 const renderAccordion = (cardList) => {
 
-    console.log(cardList);
 	//render accordionWrapper
 	const accordionEl = document.createElement('div');
 	accordionEl.className = 'accordion';
