@@ -5,7 +5,26 @@
 
  //"Y"esterday "T"oday "T"omorrow 
 const getNameDayByYTT = async (day, timezone, country) => {
-    const response = await fetch(`https://api.abalin.net/${day}?timezone=${timezone}&country=${country}`);
+    let response;
+    if(country === ''){
+        if(timezone === 'any'){
+            //no spesific timezone or country
+            response = await fetch(`https://api.abalin.net/${day}`);
+        }else {
+            //no spesific country
+            response = await fetch(`https://api.abalin.net/${day}?timezone=${timezone}`);
+        }
+    }else if(timezone === 'any'){
+        if(country === ''){
+            //no spesific timezone or country
+            response = await fetch(`https://api.abalin.net/${day}`);
+        }else{
+            //no spesific timezone only country
+            response = await fetch(`https://api.abalin.net/${day}?country=${country}`);
+        }
+    }else{
+        response = await fetch(`https://api.abalin.net/${day}?timezone=${timezone}&country=${country}`);
+    }
     if(response.status !== 200) {
         throw `response error, statusCode: ${response.status}`
     }

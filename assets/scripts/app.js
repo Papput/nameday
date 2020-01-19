@@ -276,7 +276,6 @@ document.querySelector('#app form').addEventListener('submit', e => {
         inputSelectDay == 'tomorrow' ||
         inputSelectDay == 'yesterday') {
             renderOutputDay(inputSelectDay, inputTimeZone, inputCountry);
-
     } else {
         document.querySelector('#output').innerHTML += `
             <p class="alert alert-warning">${inputValue} is an Invalid input 😅</p>
