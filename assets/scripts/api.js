@@ -8,18 +8,18 @@ const getNameDayByYTT = async (day, timezone, country) => {
     let response;
     if(country === ''){
         if(timezone === 'any'){
-            //no spesific timezone or country
+            //no specific timezone or country
             response = await fetch(`https://api.abalin.net/${day}`);
         }else {
-            //no spesific country
+            //no specific country
             response = await fetch(`https://api.abalin.net/${day}?timezone=${timezone}`);
         }
     }else if(timezone === 'any'){
         if(country === ''){
-            //no spesific timezone or country
+            //no specific timezone or country
             response = await fetch(`https://api.abalin.net/${day}`);
         }else{
-            //no spesific timezone only country
+            //no specific timezone only country
             response = await fetch(`https://api.abalin.net/${day}?country=${country}`);
         }
     }else{
