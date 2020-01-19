@@ -113,6 +113,8 @@ const renderLayout = (layout) => {
 }
 
 const renderAccordion = (cardList) => {
+
+    console.log(cardList);
 	//render accordionWrapper
 	const accordionEl = document.createElement('div');
 	accordionEl.className = 'accordion';
@@ -140,20 +142,26 @@ const renderAccordion = (cardList) => {
 		`
 	document.querySelector('#accordionWrapper').append(cardEl);
 
-	//render sameName dates
-	getNameDayDate(cardObject.month, cardObject.day, '')
-		.then(data => {
-			data.data.forEach(result => {
-				let countrys = Object.keys(result.namedays);
-				countrys.forEach(country => {
-					document.querySelector(`#outputUl${index}`).innerHTML += `
-                    	<li class="list-group-item"><span>${country}:</span> ${result.namedays[country]}</li>
-                	`;
-				})
-			
-			})
-		})
-	});
+    const allCountries = ['at','hr','cz','dk','fi','fr','de','hu','it','pl','sk','es','se','us']
+    
+    //get nameday date for all countries
+    allCountries.forEach(country => {
+        //render sameName dates
+        getNameDayDate(cardObject.month, cardObject.day, country)
+            .then(data => {
+                data.data.forEach(result => {
+                    let countrys = Object.keys(result.namedays);
+                    countrys.forEach(country => {
+                        document.querySelector(`#outputUl${index}`).innerHTML += `
+                            <li class="list-group-item"><span>${country}:</span> ${result.namedays[country]}</li>
+                        `;
+                    })
+                
+                })
+            })
+        });
+
+    });
 }
 //render api data
 const renderOutputDay = (day, timezone, country) => {
